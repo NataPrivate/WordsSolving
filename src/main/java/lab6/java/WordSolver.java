@@ -1,7 +1,5 @@
 package lab6.java;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.io.*;
 import java.util.*;
 
@@ -45,6 +43,19 @@ public class WordSolver {
                 simpleWords.add(word);
         }
     }
+    private List<String> getAllWords() throws IllegalArgumentException {
+        List<String> allWords = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String newWord;
+            while ((newWord = reader.readLine()) != null && !allWords.contains(newWord))
+                allWords.add(newWord);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (allWords.size() == 0)
+            throw new IllegalArgumentException();
+        return allWords;
+    }
     private boolean isConcatenated(boolean isEntire, String word) {
         List<String> possibleStartWords = getStartStrings(isEntire, word);
         if (possibleStartWords.size() == 0)
@@ -54,17 +65,6 @@ public class WordSolver {
             if (word.equals(startWord) || isConcatenated(false, word.substring(startWord.length())))
                 return true;
         return false;
-    }
-    private List<String> getAllWords() {
-        List<String> allWords = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String newWord;
-            while ((newWord = reader.readLine()) != null && !allWords.contains(newWord))
-                allWords.add(newWord);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return allWords;
     }
     private List<String> getStartStrings(boolean isEntireWord, String expectedString) {
         List<String> startStrings = new ArrayList<>();
@@ -78,10 +78,12 @@ public class WordSolver {
         return startStrings;
     }
 
-    public List<String> getConcatenatedWordByLengthAt(int indexFromEnd) throws InvalidArgumentException {
+    public List<String> getConcatenatedWordByLengthAt(int indexFromEnd) throws IllegalArgumentException {
         if (indexFromEnd < 1)
-            throw new InvalidArgumentException(new String[]{"Index can not be less than 1"});
+            throw new IllegalArgumentException();
 
+        if (allWords == null)
+            sort();
         Map<Integer, List<String>> wordsByLength = getWordsByLength();
         Map<Integer, List<String>> sortedWordsByLength = new TreeMap<>(wordsByLength);
         return (List<String>)sortedWordsByLength.values().toArray()[sortedWordsByLength.size() - indexFromEnd];
