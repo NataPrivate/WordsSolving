@@ -1,0 +1,2 @@
+# WordsSolving
+MTP Lab6
