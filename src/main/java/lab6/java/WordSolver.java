@@ -1,11 +1,13 @@
 package lab6.java;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class WordSolver {
     private String filePath;
+    private List<String> allWords;
     private List<String> simpleWords;
     private List<String> concatenatedWords;
 
@@ -35,50 +37,36 @@ public class WordSolver {
      * to simpleWords list or concatenatedWords list
      */
     public void sort() {
-        List<String> allWords = getAllWords();
-        String substractedWord;
-        List<String> possibleStartWords;
-        String startWord;
-        boolean isConcatenated;
-        boolean isEntireWord;
+        allWords = getAllWords();
         for (String word : allWords) {
-            substractedWord = word;
-            isConcatenated = false;
-            isEntireWord = true;
-            while (substractedWord.length() != 0) {
-                isConcatenated = false;
-                possibleStartWords = getStartStrings(isEntireWord, substractedWord, allWords);
-                if (possibleStartWords.size() == 0) {
-                    simpleWords.add(word);
-                    break;
-                }
-                else {
-                    isConcatenated = true;
-                    isEntireWord = false;
-                    startWord = getMaxStartWord(possibleStartWords);
-                    substractedWord = substractedWord.substring(startWord.length());
-                }
-            }
-            if (isConcatenated)
+            if(isConcatenated(true, word))
                 concatenatedWords.add(word);
+            else
+                simpleWords.add(word);
         }
     }
+    private boolean isConcatenated(boolean isEntire, String word) {
+        List<String> possibleStartWords = getStartStrings(isEntire, word);
+        if (possibleStartWords.size() == 0)
+            return false;
 
-    private String getMaxStartWord(List<String> startStrings) {
-        String maxStartWord = startStrings.get(0);
-        int maxLength = startStrings.get(0).length();
-        int currentLength;
-        for (String startWord : startStrings) {
-            currentLength = startWord.length();
-            if (currentLength > maxLength) {
-                maxLength = currentLength;
-                maxStartWord = startWord;
-            }
-        }
-        return maxStartWord;
+        for (String startWord : possibleStartWords)
+            if (word.equals(startWord) || isConcatenated(false, word.substring(startWord.length())))
+                return true;
+        return false;
     }
-
-    private List<String> getStartStrings(boolean isEntireWord, String expectedString, List<String> allWords) {
+    private List<String> getAllWords() {
+        List<String> allWords = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String newWord;
+            while ((newWord = reader.readLine()) != null && !allWords.contains(newWord))
+                allWords.add(newWord);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return allWords;
+    }
+    private List<String> getStartStrings(boolean isEntireWord, String expectedString) {
         List<String> startStrings = new ArrayList<>();
         for (String word : allWords)
             if (expectedString.startsWith(word)) {
@@ -90,15 +78,27 @@ public class WordSolver {
         return startStrings;
     }
 
-    private List<String> getAllWords() {
-        List<String> allWords = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String newWord;
-            while ((newWord = reader.readLine()) != null)
-                allWords.add(newWord);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public List<String> getConcatenatedWordByLengthAt(int indexFromEnd) throws InvalidArgumentException {
+        if (indexFromEnd < 1)
+            throw new InvalidArgumentException(new String[]{"Index can not be less than 1"});
+
+        Map<Integer, List<String>> wordsByLength = getWordsByLength();
+        Map<Integer, List<String>> sortedWordsByLength = new TreeMap<>(wordsByLength);
+        return (List<String>)sortedWordsByLength.values().toArray()[sortedWordsByLength.size() - indexFromEnd];
+    }
+    private Map<Integer, List<String>> getWordsByLength() {
+        Map<Integer, List<String>> wordsByLengths = new HashMap<>();
+        List<String> wordsWithCurrentLength = new ArrayList<>();
+        for (String concatenatedWord : concatenatedWords) {
+            wordsWithCurrentLength.clear();
+            int currentLength = concatenatedWord.length();
+            if (!wordsByLengths.containsKey(currentLength)) {
+                for (String word : concatenatedWords)
+                    if (word.length() == currentLength)
+                        wordsWithCurrentLength.add(word);
+                wordsByLengths.put(currentLength, new ArrayList<>(wordsWithCurrentLength));
+            }
         }
-        return allWords;
+        return wordsByLengths;
     }
 }
