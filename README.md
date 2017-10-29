@@ -1,2 +1,2 @@
 # WordsSolving
-MTP Lab6
+MTP_Lab6
