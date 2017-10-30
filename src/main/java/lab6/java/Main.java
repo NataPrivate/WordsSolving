@@ -2,7 +2,7 @@ package lab6.java;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        long time = System.nanoTime();;
+        long time = System.nanoTime();
         WordSolver solver = new WordSolver("words0.txt");
         solver.sort();
         if (solver.getConcatenatedWords().size() == 0 || solver.getSimpleWords().size() == 0)
