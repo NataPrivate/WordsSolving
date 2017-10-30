@@ -1,0 +1,24 @@
+	Simple:
+cat
+cats
+dog
+hippopotamus
+hippopotamuses
+rat
+rats
+sdog
+sdogs
+Concatenated:
+catcatcatcatscatcat
+	catcats
+catratdog
+catsdogcats
+catsdogscat
+dogcatsdog
+ratcatdogcats
+ratdogcat
+ratsdogscatsdog
+13482300 nanosec
+Memory used: 2113360 B 
+Count of concatenated: 9
+4The longest of concatenated: [catcatcatcatscatcat]
