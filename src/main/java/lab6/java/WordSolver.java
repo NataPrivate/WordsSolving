@@ -78,6 +78,7 @@ public class WordSolver {
         return startStrings;
     }
 
+    @SuppressWarnings("unchecked")
     public List<String> getConcatenatedWordByLengthAt(int indexFromEnd) throws IllegalArgumentException {
         if (indexFromEnd < 1)
             throw new IllegalArgumentException();
