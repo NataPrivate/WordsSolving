@@ -21,8 +21,9 @@ public class WordSolverTest {
     public void sort() throws Exception {
         WordSolver solver = new WordSolver("words0.txt");
         solver.sort();
-        assertEquals(solver.getConcatenatedWords().size(), 9);
-        assertEquals(solver.getSimpleWords().size(), 9);
+        assertEquals(solver.getFullyConcatenatedWords().size(), 9);
+        assertEquals(solver.getPartlyConcatenatedWords().size(), 4);
+        assertEquals(solver.getSimpleWords().size(), 5);
     }
     @Test(expected = IllegalArgumentException.class)
     public void getConcatenatedWordByLengthAtNegative() throws Exception {
