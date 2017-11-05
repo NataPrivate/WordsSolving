@@ -5,17 +5,20 @@ public class Main {
         long time = System.nanoTime();
         WordSolver solver = new WordSolver("words0.txt");
         solver.sort();
-        if (solver.getConcatenatedWords().size() == 0 || solver.getSimpleWords().size() == 0)
+        if (solver.getFullyConcatenatedWords().size() == 0 || solver.getSimpleWords().size() == 0)
             System.out.println("ERROR");
         System.out.println("Simple:");
         for (String word : solver.getSimpleWords())
             System.out.println(word);
+        System.out.println("Partly Concatenated:");
+        for (String word : solver.getPartlyConcatenatedWords())
+            System.out.println(word);
         System.out.println("Concatenated:");
-        for (String word : solver.getConcatenatedWords())
+        for (String word : solver.getFullyConcatenatedWords())
             System.out.println(word);
         System.out.println((System.nanoTime() - time) + " nanosec");
         getMemoryConsumption();
-        System.out.println("Count of concatenated: " + solver.getConcatenatedWords().size());
+        System.out.println("Count of concatenated: " + solver.getFullyConcatenatedWords().size());
         System.out.println("The longest of concatenated: " + solver.getConcatenatedWordByLengthAt(1));
     }
     private static void getMemoryConsumption() {

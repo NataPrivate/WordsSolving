@@ -3,12 +3,9 @@ package lab6.java;
 import java.io.*;
 import java.util.*;
 
-public class WordSolver {
-    private String filePath;
-    private List<String> allWords;
-    private List<String> simpleWords;
-    private List<String> concatenatedWords;
 
+
+public class WordSolver {
     public void setFilePath(String filePath) throws FileNotFoundException {
         if (!new File(filePath).isFile())
             throw new FileNotFoundException("The file under this path doesn't exist");
@@ -17,9 +14,18 @@ public class WordSolver {
     public List<String> getSimpleWords() {
         return simpleWords;
     }
-    public List<String> getConcatenatedWords() {
-        return concatenatedWords;
+    public List<String> getPartlyConcatenatedWords() {
+        return partlyConcatenatedWords;
     }
+    public List<String> getFullyConcatenatedWords() {
+        return fullyConcatenatedWords;
+    }
+
+    private String filePath;
+    private List<String> allWords;
+    private List<String> simpleWords;
+    private List<String> partlyConcatenatedWords;
+    private List<String> fullyConcatenatedWords;
 
     public WordSolver(String path) throws FileNotFoundException {
         this();
@@ -27,7 +33,8 @@ public class WordSolver {
     }
     public WordSolver() {
         simpleWords = new ArrayList<>();
-        concatenatedWords = new ArrayList<>();
+        partlyConcatenatedWords = new ArrayList<>();
+        fullyConcatenatedWords = new ArrayList<>();
     }
 
     /**
@@ -38,8 +45,8 @@ public class WordSolver {
         allWords = getAllWords();
         for (String word : allWords) {
             if(isConcatenated(true, word))
-                concatenatedWords.add(word);
-            else
+                fullyConcatenatedWords.add(word);
+            else if (!partlyConcatenatedWords.contains(word))
                 simpleWords.add(word);
         }
     }
@@ -64,6 +71,8 @@ public class WordSolver {
         for (String startWord : possibleStartWords)
             if (word.equals(startWord) || isConcatenated(false, word.substring(startWord.length())))
                 return true;
+
+        partlyConcatenatedWords.add(word);
         return false;
     }
     private List<String> getStartStrings(boolean isEntireWord, String expectedString) {
@@ -92,11 +101,11 @@ public class WordSolver {
     private Map<Integer, List<String>> getWordsByLength() {
         Map<Integer, List<String>> wordsByLengths = new HashMap<>();
         List<String> wordsWithCurrentLength = new ArrayList<>();
-        for (String concatenatedWord : concatenatedWords) {
+        for (String concatenatedWord : fullyConcatenatedWords) {
             wordsWithCurrentLength.clear();
             int currentLength = concatenatedWord.length();
             if (!wordsByLengths.containsKey(currentLength)) {
-                for (String word : concatenatedWords)
+                for (String word : fullyConcatenatedWords)
                     if (word.length() == currentLength)
                         wordsWithCurrentLength.add(word);
                 wordsByLengths.put(currentLength, new ArrayList<>(wordsWithCurrentLength));
