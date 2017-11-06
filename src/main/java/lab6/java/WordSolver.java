@@ -72,7 +72,8 @@ public class WordSolver {
             if (word.equals(startWord) || isConcatenated(false, word.substring(startWord.length())))
                 return true;
 
-        partlyConcatenatedWords.add(word);
+        if (isEntire)
+            partlyConcatenatedWords.add(word);
         return false;
     }
     private List<String> getStartStrings(boolean isEntireWord, String expectedString) {
