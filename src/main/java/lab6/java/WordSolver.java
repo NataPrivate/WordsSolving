@@ -75,26 +75,21 @@ public class WordSolver {
      * @return true if word is fully concatenated
      */
     private boolean isPrefixConcatenated(boolean isEntire, String word) {
-        boolean goneInRecursion = false;
+        boolean hasPartOfAnotherWord = false;
         String prefix;
         String suffix;
         for (int i = 0; i < word.length(); i++) {
             prefix = word.substring(0, i + 1);
             suffix = word.substring(i + 1, word.length());
             if (trie.getFinalNode(prefix) != null) {
-                // the end of the word in recursion
-                if ((!isEntire && suffix.isEmpty()) && trie.getFinalNode(suffix) != null)
+                if (!suffix.isEmpty())
+                    hasPartOfAnotherWord = true;
+                if ((!isEntire && suffix.isEmpty()) || isPrefixConcatenated(false, suffix))
                     return true;
-                if (!suffix.isEmpty()) {
-                    if (isPrefixConcatenated(false, suffix))
-                        return true;
-                    // mark for partlyConcatenatedWords, that were in recursion but with no result
-                    else
-                        goneInRecursion = true;
-                }
             }
         }
-        if (isEntire && goneInRecursion)
+
+        if (isEntire && hasPartOfAnotherWord)
             partlyConcatenatedWords.add(word);
         return false;
     }

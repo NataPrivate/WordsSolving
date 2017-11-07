@@ -39,7 +39,7 @@ public class Trie {
     public TrieNode getFinalNode(String word) {
         TrieNode currentNode = root;
         if (word.isEmpty())
-            return currentNode;
+            return null;
 
         char currentLetter;
         TrieNode nextNode;

@@ -8,7 +8,7 @@ public class Main {
         long time = System.nanoTime();
         WordSolver solver = new WordSolver("words.txt");
         solver.sort();
-        System.out.println((System.nanoTime() - time) * Math.pow(10, -6) + " milisec");
+        System.out.println((System.nanoTime() - time) * Math.pow(10, -6) + " millisec");
         getMemoryConsumption();
 
         getWordsInformation(solver);
