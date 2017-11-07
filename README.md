@@ -1,9 +1,11 @@
 # WordsSolving
-MTP_Lab6
+> MTP_Lab6
+
 The project divides words from file into 3 categories:
 - simple
 - partly concatenated
 - fully concatenated (explicitly formed with other words)
+
 Also it allows to get 1st, 2nd, 3rd, ... n-th by max length fully concatenated words.
 
 The efficacy was checked with full list of words - words.txt, but in tests - shortened words0.txt.
