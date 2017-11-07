@@ -16,8 +16,8 @@ public class TrieTest {
     }
 
     @Test
-    public void getRootNode() throws Exception {
-        assertTrue(trie.getFinalNode("") != null);
+    public void getNodeWithEmptyChar() throws Exception {
+        assertTrue(trie.getFinalNode("") == null);
     }
     @Test
     public void getUnexistedNode() throws Exception {
