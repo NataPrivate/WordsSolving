@@ -8,6 +8,13 @@ import java.util.stream.Stream;
 
 
 public class WordSolver {
+    private String filePath;
+    private Trie trie;
+    private List<String> allWords;
+    private List<String> simpleWords;
+    private List<String> partlyConcatenatedWords;
+    private List<String> fullyConcatenatedWords;
+
     public void setFilePath(String filePath) throws FileNotFoundException {
         if (!new File(filePath).isFile())
             throw new FileNotFoundException("The file under this path doesn't exist");
@@ -22,13 +29,6 @@ public class WordSolver {
     public List<String> getFullyConcatenatedWords() {
         return fullyConcatenatedWords;
     }
-
-    private String filePath;
-    private Trie trie;
-    private List<String> allWords;
-    private List<String> simpleWords;
-    private List<String> partlyConcatenatedWords;
-    private List<String> fullyConcatenatedWords;
 
     /**
      * @param path to file with words
