@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.lab6.MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-10-29T23:59:08" hostname="PC" time="0.109">
+<testsuite name="test.lab6.MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-11-07T21:25:54" hostname="PC" time="64.922">
   <properties/>
-  <testcase name="main" classname="test.lab6.MainTest" time="0.109"/>
-  <system-out><![CDATA[Simple:
-cat
-cats
-dog
-hippopotamus
-hippopotamuses
-rat
-rats
-sdog
-sdogs
-Concatenated:
-catcatcatcatscatcat
-catcats
-catratdog
-catsdogcats
-catsdogscat
-dogcatsdog
-ratcatdogcats
-ratdogcat
-ratsdogscatsdog
-13482300 nanosec
-Memory used: 2113360 B 
-Count of concatenated: 9
-The longest of concatenated: [catcatcatcatscatcat]
+  <testcase name="main" classname="test.lab6.MainTest" time="64.922"/>
+  <system-out><![CDATA[63900.69259 millisec
+Memory used: 48885760 B 
+Simple number: 3156
+Partly number: 73265
+Fully number: 97107
+The longest of concatenated: [ethylenediaminetetraacetates] with length 28
+The 2nd longest of concatenated: [electroencephalographically, ethylenediaminetetraacetate]
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

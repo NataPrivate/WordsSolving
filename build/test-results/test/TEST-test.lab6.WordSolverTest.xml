@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.lab6.WordSolverTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2017-10-29T23:59:08" hostname="PC" time="0.022">
+<testsuite name="test.lab6.WordSolverTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2017-11-07T21:26:59" hostname="PC" time="0.11">
   <properties/>
-  <testcase name="sortEmpty" classname="test.lab6.WordSolverTest" time="0.001"/>
-  <testcase name="sort" classname="test.lab6.WordSolverTest" time="0.004"/>
-  <testcase name="getConcatenatedWordByLengthAt1WithUnsorted" classname="test.lab6.WordSolverTest" time="0.006"/>
-  <testcase name="getConcatenatedWordByLengthAt1" classname="test.lab6.WordSolverTest" time="0.002"/>
-  <testcase name="getConcatenatedWordByLengthAt2" classname="test.lab6.WordSolverTest" time="0.004"/>
-  <testcase name="getConcatenatedWordByLengthAt4" classname="test.lab6.WordSolverTest" time="0.002"/>
+  <testcase name="getConcatenatedWordByLengthAtOutOfBound" classname="test.lab6.WordSolverTest" time="0.0"/>
+  <testcase name="sortEmpty" classname="test.lab6.WordSolverTest" time="0.016"/>
+  <testcase name="sort" classname="test.lab6.WordSolverTest" time="0.0"/>
+  <testcase name="getConcatenatedWordByLengthAt1WithUnsorted" classname="test.lab6.WordSolverTest" time="0.0"/>
+  <testcase name="getConcatenatedWordByLengthAt1" classname="test.lab6.WordSolverTest" time="0.016"/>
+  <testcase name="getConcatenatedWordByLengthAt2" classname="test.lab6.WordSolverTest" time="0.0"/>
+  <testcase name="getConcatenatedWordByLengthAt4" classname="test.lab6.WordSolverTest" time="0.016"/>
   <testcase name="getConcatenatedWordByLengthAtNegative" classname="test.lab6.WordSolverTest" time="0.0"/>
   <testcase name="WordSolverWithInvalidPath" classname="test.lab6.WordSolverTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>

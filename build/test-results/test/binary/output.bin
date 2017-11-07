@@ -1,24 +1,7 @@
-	Simple:
-cat
-cats
-dog
-hippopotamus
-hippopotamuses
-rat
-rats
-sdog
-sdogs
-Concatenated:
-catcatcatcatscatcat
-	catcats
-catratdog
-catsdogcats
-catsdogscat
-dogcatsdog
-ratcatdogcats
-ratdogcat
-ratsdogscatsdog
-13482300 nanosec
-Memory used: 2113360 B 
-Count of concatenated: 9
-4The longest of concatenated: [catcatcatcatscatcat]
+63900.69259 millisec
+Memory used: 48885760 B 
+Simple number: 3156
+Partly number: 73265
+Fully number: 97107
+LThe longest of concatenated: [ethylenediaminetetraacetates] with length 28
+]The 2nd longest of concatenated: [electroencephalographically, ethylenediaminetetraacetate]
