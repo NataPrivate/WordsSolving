@@ -1,26 +1,35 @@
 package lab6.java;
 
+import java.util.List;
+
+
 public class Main {
     public static void main(String[] args) throws Exception {
         long time = System.nanoTime();
-        WordSolver solver = new WordSolver("words0.txt");
+        WordSolver solver = new WordSolver("words.txt");
         solver.sort();
-        if (solver.getFullyConcatenatedWords().size() == 0 || solver.getSimpleWords().size() == 0)
-            System.out.println("ERROR");
-        System.out.println("Simple:");
-        for (String word : solver.getSimpleWords())
-            System.out.println(word);
-        System.out.println("Partly Concatenated:");
-        for (String word : solver.getPartlyConcatenatedWords())
-            System.out.println(word);
-        System.out.println("Concatenated:");
-        for (String word : solver.getFullyConcatenatedWords())
-            System.out.println(word);
-        System.out.println((System.nanoTime() - time) + " nanosec");
+        System.out.println((System.nanoTime() - time) * Math.pow(10, -6) + " milisec");
         getMemoryConsumption();
-        System.out.println("Count of concatenated: " + solver.getFullyConcatenatedWords().size());
-        System.out.println("The longest of concatenated: " + solver.getConcatenatedWordByLengthAt(1));
+
+        getWordsInformation(solver);
     }
+
+    private static void getWordsInformation(WordSolver solver) {
+        int simpleWordsCount = solver.getSimpleWords().size();
+        int partlyConcatenatedWordsCount = solver.getPartlyConcatenatedWords().size();
+        int fullyConcatenatedWordsCount = solver.getFullyConcatenatedWords().size();
+        System.out.println("Simple number: " + simpleWordsCount);
+        System.out.println("Partly number: " + partlyConcatenatedWordsCount);
+        System.out.println("Fully number: " + fullyConcatenatedWordsCount);
+        if (simpleWordsCount == 0 && partlyConcatenatedWordsCount == 0 && fullyConcatenatedWordsCount == 0)
+            System.out.println("ERROR");
+
+        List<String> longestWords = solver.getConcatenatedWordByLengthAt(1);
+        System.out.println("The longest of concatenated: " + longestWords +
+                " with length " + longestWords.get(0).length());
+        System.out.println("The 2nd longest of concatenated: " + solver.getConcatenatedWordByLengthAt(2));
+    }
+
     private static void getMemoryConsumption() {
         Runtime runtime = Runtime.getRuntime();
         runtime.gc();
