@@ -53,16 +53,12 @@ public class WordSolver {
     public void sort() {
         getAllWordsFromFile();
         for (String word : allWords) {
-            if (isPrefixConcatenated(true, word)) {
+            if (isConcatenated(true, word)) {
                 fullyConcatenatedWords.add(word);
                 continue;
             }
             if (partlyConcatenatedWords.contains(word))
                 continue;
-            if (isPartlyConcatenatedFromRight(word)) {
-                partlyConcatenatedWords.add(word);
-                continue;
-            }
             simpleWords.add(word);
         }
     }
@@ -74,40 +70,26 @@ public class WordSolver {
      * @param word to be checked
      * @return true if word is fully concatenated
      */
-    private boolean isPrefixConcatenated(boolean isEntire, String word) {
+    private boolean isConcatenated(boolean isEntire, String word) {
         boolean hasPartOfAnotherWord = false;
         String prefix;
         String suffix;
         for (int i = 0; i < word.length(); i++) {
             prefix = word.substring(0, i + 1);
             suffix = word.substring(i + 1, word.length());
+            if (!hasPartOfAnotherWord && isEntire && trie.getFinalNode(prefix) == null && trie.getFinalNode(suffix) != null)
+                hasPartOfAnotherWord = true;
             if (trie.getFinalNode(prefix) != null) {
-                if (!suffix.isEmpty())
+                if (!hasPartOfAnotherWord && !suffix.isEmpty())
                     hasPartOfAnotherWord = true;
-                if ((!isEntire && suffix.isEmpty()) || isPrefixConcatenated(false, suffix))
+                if ((!isEntire && suffix.isEmpty()) || trie.getFinalNode(suffix) != null ||
+                    (!suffix.isEmpty() && isConcatenated(false, suffix)))
                     return true;
             }
         }
 
         if (isEntire && hasPartOfAnotherWord)
             partlyConcatenatedWords.add(word);
-        return false;
-    }
-
-    /**
-     * A method checks whether a word is fully concatenated
-     * e.g. dog - sdog
-     * @param word to be checked
-     * @return true if word is partly concatenated
-     */
-    private boolean isPartlyConcatenatedFromRight (String word) {
-        String suffix;
-        for (int i = 0; i < word.length() - 1; i++) {
-            suffix = word.substring(i + 1, word.length());
-            if (trie.getFinalNode(suffix) != null)
-                return true;
-        }
-
         return false;
     }
 
