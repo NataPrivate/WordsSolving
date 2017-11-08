@@ -53,43 +53,59 @@ public class WordSolver {
     public void sort() {
         getAllWordsFromFile();
         for (String word : allWords) {
-            if (isConcatenated(true, word)) {
+            if (isFullyConcatenated(true, word)) {
                 fullyConcatenatedWords.add(word);
                 continue;
             }
-            if (partlyConcatenatedWords.contains(word))
+            if (isPartlyConcatenated(word)) {
+                partlyConcatenatedWords.add(word);
                 continue;
+            }
             simpleWords.add(word);
         }
     }
 
     /**
-     * A method checks whether a word is fully concatenated
-     * may also add the word to list of partly concatenated
-     * @param isEntire stands for words aren't in recursion
-     * @param word to be checked
+     * A method checks if word is fully concatenated
+     * @param isEntire indicates whether it is initial version of word
+     * or its part in recursion
+     * @param word to check
      * @return true if word is fully concatenated
      */
-    private boolean isConcatenated(boolean isEntire, String word) {
-        boolean hasPartOfAnotherWord = false;
+    private boolean isFullyConcatenated(boolean isEntire, String word) {
         String prefix;
         String suffix;
         for (int i = 0; i < word.length(); i++) {
             prefix = word.substring(0, i + 1);
             suffix = word.substring(i + 1, word.length());
-            if (!hasPartOfAnotherWord && isEntire && trie.getFinalNode(prefix) == null && trie.getFinalNode(suffix) != null)
-                hasPartOfAnotherWord = true;
-            if (trie.getFinalNode(prefix) != null) {
-                if (!hasPartOfAnotherWord && !suffix.isEmpty())
-                    hasPartOfAnotherWord = true;
+            if (trie.getFinalNode(prefix) != null)
                 if ((!isEntire && suffix.isEmpty()) || trie.getFinalNode(suffix) != null ||
-                    (!suffix.isEmpty() && isConcatenated(false, suffix)))
+                        (!suffix.isEmpty() && isFullyConcatenated(false, suffix)))
                     return true;
-            }
         }
 
-        if (isEntire && hasPartOfAnotherWord)
-            partlyConcatenatedWords.add(word);
+        return false;
+    }
+
+    /**
+     * A method checks if word is partly concatenated
+     * word must be non-fully concatenated (previous sort)
+     * @param word to check for part. concatenation
+     * @return true if word is partly concatenated
+     */
+    private boolean isPartlyConcatenated(String word) {
+        String prefix;
+        String suffix;
+        for (int i = 0; i < word.length(); i++) {
+            prefix = word.substring(0, i + 1);
+            suffix = word.substring(i + 1, word.length());
+            if (prefix.length() == 0 || suffix.length() == 0)
+                break;
+
+            if (trie.getFinalNode(prefix) != null || trie.getFinalNode(suffix) != null)
+                return true;
+        }
+
         return false;
     }
 
